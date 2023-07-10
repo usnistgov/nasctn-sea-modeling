@@ -1,152 +1,86 @@
-# NIST Open-Source Software Repository Template
+# NASCTN SEA Modeling Repository
 
-Use of GitHub by NIST employees for government work is subject to
-the [Rules of Behavior for GitHub][gh-rob]. This is the
-recommended template for NIST employees, since it contains
-required files with approved text. For details, please consult
-the Office of Data & Informatics' [Quickstart Guide to GitHub at
-NIST][gh-odi].
+This repository contains code used in the modeling for the National Advanced Spectrum and Communications Test Network (NASCTN) Sharing Ecosystem Assessment (SEA) project. It runs dynamic protection area (DPA) move list algorithm and computes aggregate emission at sensor location in the Citizens Broadband Radio Service (CBRS) band. Some of the scripts were derived from the WInnForum's reference implementation of the Spectrum Access System (SAS) test harness.
 
-Please click on the green **Use this template** button above to
-create a new repository under the [usnistgov][gh-nst]
-organization for your own open-source work. Please do not "fork"
-the repository directly, and do not create the templated
-repository under your individual account.
+## Data
 
-The key files contained in this repository -- which will also
-appear in templated copies -- are listed below, with some things
-to know about each.
+The data required to run the code need to be stored in the `data/` folder, which contains `fad/` and `sensor/` subfolders:
+* The `fad/` subfolder contains information of Citizens Broadband Radio Service Device (CBSD) grants, which can be extracted from real Full Activity Dump (FAD) data files or generated from a randomized CBSD deployment.
+* The `sensor/` subfolder contains information of SEA sensors (e.g., location, height, 2D antenna data, etc.) and associated 2D antenna gain .nc files.
 
----
+## Code prerequisites
 
-## README
+The code in this repository depend on the WInnForum's SAS test harness code and data. In order to run the code correctly, it's required to:
+* Install all the packages and software listed at [https://github.com/Wireless-Innovation-Forum/Spectrum-Access-System](https://github.com/Wireless-Innovation-Forum/Spectrum-Access-System)
+  Note: Install *shapely* version below 2.0 and *numpy* version below 1.24 to avoid deprecation warning and error messages. 
+* Download the geo data (e.g., USGS NED Terrain and NLCD Land cover data, etc. ) by following the instructions at [https://github.com/Wireless-Innovation-Forum/Common-Data](https://github.com/Wireless-Innovation-Forum/Common-Data) 
+* Set up and compile extension modules for propagation models by following the instructions at [https://github.com/Wireless-Innovation-Forum/Spectrum-Access-System/tree/master/src/harness/reference_models/propagation](https://github.com/Wireless-Innovation-Forum/Spectrum-Access-System/tree/master/src/harness/reference_models/propagation)
+* Download *GB-DPAS.kml* file from ([https://ntia.gov/fcc-filing/ntia-letter-fcc-commercial-operations-3550-3650-mhz-band](https://ntia.gov/fcc-filing/ntia-letter-fcc-commercial-operations-3550-3650-mhz-band)) and save as *gb-dpas.kml* under `../Spectrum-Access-System/data/ntia/` folder
+* Install *xarray* package and its dependencies ([https://docs.xarray.dev/en/stable/getting-started-guide/installing.html](https://docs.xarray.dev/en/stable/getting-started-guide/installing.html))
+* Install *scipy* package ([https://scipy.org/install/](https://scipy.org/install/))
+  Note: Validating the setup using the `test_config.py` under `../Spectrum-Access-System/src/harness/reference_models` folder might produce error messages for missing NED terrain tiles or missing NLCD land cover. However, these error messages might not affect the execution of NASCTN SEA modeling code.
 
-Each repository will contain a plain-text [README file][wk-rdm],
-preferably formatted using [GitHub-flavored Markdown][gh-mdn] and
-named `README.md` (this file) or `README`.
+## Usage
 
-Per the [GitHub ROB][gh-rob] and [NIST Suborder 1801.02][nist-s-1801-02],
-your README should contain:
+1. Clone this repository:
 
-1. Software or Data description
-   - Statements of purpose and maturity
-   - Description of the repository contents
-   - Technical installation instructions, including operating
-     system or software dependencies
-1. Contact information
-   - PI name, NIST OU, Division, and Group names
-   - Contact email address at NIST
-   - Details of mailing lists, chatrooms, and discussion forums,
-     where applicable
-1. Related Material
-   - URL for associated project on the NIST website or other Department
-     of Commerce page, if available
-   - References to user guides if stored outside of GitHub
-1. Directions on appropriate citation with example text
-1. References to any included non-public domain software modules,
-   and additional license language if needed, *e.g.* [BSD][li-bsd],
-   [GPL][li-gpl], or [MIT][li-mit]
+   ```bash
+   git clone https://github.com/usnistgov/nasctn-sea-modeling
+   ```
 
-The more detailed your README, the more likely our colleagues
-around the world are to find it through a Web search. For general
-advice on writing a helpful README, please review
-[*Making Readmes Readable*][18f-guide] from 18F and Cornell's
-[*Guide to Writing README-style Metadata*][cornell-meta].
+2. Update the `../Spectrum-Access-System/src/harness` folder with local directory in the following scripts `src/mainscript_E_DPAs.py`, `src/mainscript_GB_DPAs.py`, `src/visualization_E_DPAs.py`, and `src/visualization_GB_DPAs.py`.
 
-## LICENSE
+   Note that `src/visualization_E_DPAs.py` and `src/visualization_GB_DPAs.py` are optional, which can used for plotting the results.
 
-Each repository will contain a plain-text file named `LICENSE.md`
-or `LICENSE` that is phrased in compliance with the Public Access
-to NIST Research [*Copyright, Fair Use, and Licensing Statement
-for SRD, Data, and Software*][nist-open], which provides
-up-to-date official language for each category in a blue box.
+3. Configure the number of parallel processes, i.e., `num_processes` parameter, in the following scripts `src/mainscript_E_DPAs.py` and `src/mainscript_GB_DPAs.py`.
 
-- The version of [LICENSE.md](LICENSE.md) included in this
-  repository is approved for use.
-- Updated language on the [Licensing Statement][nist-open] page
-  supersedes the copy in this repository. You may transcribe the
-  language from the appropriate "blue box" on that page into your
-  README.
+4. Navigate to the `src/` folder and type the following commands:
 
-If your repository includes any software or data that is licensed
-by a third party, create a separate file for third-party licenses
-(`THIRD_PARTY_LICENSES.md` is recommended) and include copyright
-and licensing statements in compliance with the conditions of
-those licenses.
+   ```python
+   ########## For E-DPAs (e.g., East1) ##########
+   # run move list algorithm and compute aggregate emission at SEA sensor locations
+   python mainscript_E_DPAs.py --dpa_name="East1"
 
-## CODEOWNERS
+   # plot aggregate emissions when DPA is active and inactive
+   python visualization_E_DPAs.py --dpa_name="East1"
 
-This template repository includes a file named
-[CODEOWNERS](CODEOWNERS), which visitors can view to discover
-which GitHub users are "in charge" of the repository. More
-crucially, GitHub uses it to assign reviewers on pull requests.
-GitHub documents the file (and how to write one) [here][gh-cdo].
+   ########## For GB-DPAs (always-on DPA Camp Pendleton) ##########
+   # run move list algorithm and compute aggregate emission at SEA sensor locations
+   python mainscript_GB_DPAs.py 
 
-***Please update that file*** to point to your own account or
-team, so that the [Open-Source Team][gh-ost] doesn't get spammed
-with spurious review requests. *Thanks!*
+   # plot aggregate emissions when DPA is active and inactive
+   python visualization_GB_DPAs.py
 
-## CODEMETA
+   ########## For multiple DPAs: edit and run Bash scripts ##########
+   # run move list algorithm and compute aggregate emission at SEA sensor locations
+   bash mainscript_bash.sh 
 
-Project metadata is captured in `CODEMETA.yaml`, used by the NIST
-Software Portal to sort your work under the appropriate thematic
-homepage. ***Please update this file*** with the appropriate
-"theme" and "category" for your code/data/software. The Tier 1
-themes are:
+   # plot aggregate emissions when DPA is active and inactive
+   bash visualization_bash.sh
+   ```
 
-- [Advanced communications](https://www.nist.gov/advanced-communications)
-- [Bioscience](https://www.nist.gov/bioscience)
-- [Buildings and Construction](https://www.nist.gov/buildings-construction)
-- [Chemistry](https://www.nist.gov/chemistry)
-- [Electronics](https://www.nist.gov/electronics)
-- [Energy](https://www.nist.gov/energy)
-- [Environment](https://www.nist.gov/environment)
-- [Fire](https://www.nist.gov/fire)
-- [Forensic Science](https://www.nist.gov/forensic-science)
-- [Health](https://www.nist.gov/health)
-- [Information Technology](https://www.nist.gov/information-technology)
-- [Infrastructure](https://www.nist.gov/infrastructure)
-- [Manufacturing](https://www.nist.gov/manufacturing)
-- [Materials](https://www.nist.gov/materials)
-- [Mathematics and Statistics](https://www.nist.gov/mathematics-statistics)
-- [Metrology](https://www.nist.gov/metrology)
-- [Nanotechnology](https://www.nist.gov/nanotechnology)
-- [Neutron research](https://www.nist.gov/neutron-research)
-- [Performance excellence](https://www.nist.gov/performance-excellence)
-- [Physics](https://www.nist.gov/physics)
-- [Public safety](https://www.nist.gov/public-safety)
-- [Resilience](https://www.nist.gov/resilience)
-- [Standards](https://www.nist.gov/standards)
-- [Transportation](https://www.nist.gov/transportation)
+Note: See the `examples/` folder for examples of code, data, results, and plots for some E-DPAs and the GB-DPA Camp Pendleton. Note that the FAD data in the `examples/data/fad/` folder is fake and not related to the real FAD data.
 
----
+## NIST Software Licensing Statement
 
-[usnistgov/opensource-repo][gh-osr] is developed and maintained
-by the [opensource-team][gh-ost], principally:
+NIST-developed software is provided by NIST as a public service. You may use, copy, and distribute copies of the software in any medium, provided that you keep intact this entire notice. You may improve, modify, and create derivative works of the software or any portion of the software, and you may copy and distribute such modifications or works. Modified works should carry a notice stating that you changed the software and should note the date and nature of any such change. Please explicitly acknowledge the National Institute of Standards and Technology as the source of the software.
 
-- Gretchen Greene, @GRG2
-- Yannick Congo, @faical-yannick-congo
-- Trevor Keller, @tkphd
+NIST-developed software is expressly provided "AS IS." NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED, IN FACT, OR ARISING BY OPERATION OF LAW, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, AND DATA ACCURACY. NIST NEITHER REPRESENTS NOR WARRANTS THAT THE OPERATION OF THE SOFTWARE WILL BE UNINTERRUPTED OR ERROR-FREE, OR THAT ANY DEFECTS WILL BE CORRECTED. NIST DOES NOT WARRANT OR MAKE ANY REPRESENTATIONS REGARDING THE USE OF THE SOFTWARE OR THE RESULTS THEREOF, INCLUDING BUT NOT LIMITED TO THE CORRECTNESS, ACCURACY, RELIABILITY, OR USEFULNESS OF THE SOFTWARE.
 
-Please reach out with questions and comments.
+You are solely responsible for determining the appropriateness of using and distributing the software and you assume all risks associated with its use, including but not limited to the risks and costs of program errors, compliance with applicable laws, damage to or loss of data, programs or equipment, and the unavailability or interruption of operation. This software is not intended to be used in any situation where a failure could cause risk of injury or damage to property. The software developed by NIST employees is not subject to copyright protection within the United States.
 
-<!-- References -->
+NIST software license disclaimer can be found at: https://www.nist.gov/open/copyright-fair-use-and-licensing-statements-srd-data-software-and-technical-series-publications#software
 
-[18f-guide]: https://github.com/18F/open-source-guide/blob/18f-pages/pages/making-readmes-readable.md
-[cornell-meta]: https://data.research.cornell.edu/content/readme
-[gh-cdo]: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
-[gh-mdn]: https://github.github.com/gfm/
-[gh-nst]: https://github.com/usnistgov
-[gh-odi]: https://odiwiki.nist.gov/ODI/GitHub.html
-[gh-osr]: https://github.com/usnistgov/opensource-repo/
-[gh-ost]: https://github.com/orgs/usnistgov/teams/opensource-team
-[gh-rob]: https://odiwiki.nist.gov/pub/ODI/GitHub/GHROB.pdf
-[gh-tpl]: https://github.com/usnistgov/carpentries-development/discussions/3
-[li-bsd]: https://opensource.org/licenses/bsd-license
-[li-gpl]: https://opensource.org/licenses/gpl-license
-[li-mit]: https://opensource.org/licenses/mit-license
-[nist-code]: https://code.nist.gov
-[nist-disclaimer]: https://www.nist.gov/open/license
-[nist-s-1801-02]: https://inet.nist.gov/adlp/directives/review-data-intended-publication
-[nist-open]: https://www.nist.gov/open/license#software
-[wk-rdm]: https://en.wikipedia.org/wiki/README
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## Acknowledgments
+
+We would like to thank our colleagues and individuals (from NIST/CTL, NTIA/ITS, MITRE, and other stakeholders) that made valuable contributions to the code and data in this repository.
+
+## Contact information
+
+Thao Nguyen (thao.t.nguyen@nist.gov).
+
+

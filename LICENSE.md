@@ -33,3 +33,6 @@ intended to be used in any situation where a failure could cause
 risk of injury or damage to property. The software developed by
 NIST employees is not subject to copyright protection within the
 United States.
+
+NIST software license disclaimer can be found at:
+https://www.nist.gov/open/copyright-fair-use-and-licensing-statements-srd-data-software-and-technical-series-publications#software

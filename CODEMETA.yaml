@@ -31,18 +31,18 @@
 categories:
   # - ai-ml
   # - performance-and-workflow
-  - scientific-software
-  # - simulation
+  # - scientific-software
+  - simulation
   # - tools
   # - visualization
 
 themes:
-  - Information Technology
-    - Data and informatics
-  # - Advanced communications
+  # - Information Technology
+  #  - Data and informatics
+  - Advanced communications
   #     - Optical communications
   #     - Quantum communications
-  #     - Wireless (RF)
+      - Wireless (RF)
   #
   # - Bioscience
   #     - Biomaterials

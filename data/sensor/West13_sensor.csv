@@ -1,0 +1,31 @@
+Index,Location,Latitude,Longitude,Height AGL (m),Antenna Filename,Antenna Azimuth,Antenna Downtilt
+1,Del Cerro Park Parking Lot,33.75737,-118.368747,2,omnivert.nc,0,0
+2,Del Cerro Park Cliff,33.75627,-118.368783,4,omnivert.nc,0,0
+3,Long Beach Port Cruise Terminal Parking Garage,33.75091,-118.19061,16,omnivert.nc,0,0
+4,Inactive DoC Location,33.6714,-117.859747,11,omnivert.nc,0,0
+5,Carlsbad Ellery Reservoir,33.16574,-117.322543,1,omnivert.nc,0,0
+6,Torrey Pines Visitor Center,32.92053,-117.252612,1,omnivert.nc,0,0
+7,KIFM FM Transmitter,32.83881,-117.250172,2,omnivert.nc,0,0
+8,Petco Park Parking Garage,32.70612,-117.154363,14,omnivert.nc,0,0
+9,Point Loma Navy Federal Credit Union,32.7091,-117.249503,1,omnivert.nc,0,0
+10,SpringHill Suites Oceanside,33.1942,-117.3817,15,omnivert.nc,0,0
+11,NOAA Service Building,32.7202183,-117.1686152,60,omnivert.nc,0,0
+12,NOAA Group Architects,32.7248432,-117.2240705,11,omnivert.nc,0,0
+13,NOAA Southwest Fisheries Science Center,32.8700747,-117.251156,15,omnivert.nc,0,0
+14,NOAA Weather Radio KEC62,33.0086656,-116.9708699,6,omnivert.nc,0,0
+15,NOAA Tide Station 9410840,34.007563,-118.4996124,12,omnivert.nc,0,0
+16,NOAA Building,33.7675269,-118.1988335,30,omnivert.nc,0,0
+17,US Department of Commerce,33.6594221,-117.8774324,15,omnivert.nc,0,0
+18,US Department of Commerce,33.6716841,-117.859211,15,omnivert.nc,0,0
+19,MITRE (San Diego),32.734281,-117.217081,10,omnivert.nc,0,0
+20,MITRE (LaJolla),32.894084,-117.236171,8,omnivert.nc,0,0
+21,MITRE (Los Angeles),33.916956,-118.378082,26,omnivert.nc,0,0
+22,Point Loma,32.667571,-117.240008,11,omnivert.nc,0,0
+23,Camp Pendleton South,33.207229,-117.389724,55,omnivert.nc,0,0
+24,San Clemente Island,32.884194,-118.450861,6,omnivert.nc,0,0
+25,Santa Catalina Island (Airport),33.401985,-118.414735,6,omnivert.nc,0,0
+26,Torrey Pines Reserve Lodge,32.920976,-117.253222,6,omnivert.nc,0,0
+27,Point Loma Location (per Anthony),32.69518,-117.248651,12,omnivert.nc,0,0
+28,KIFM-FM Transmitter (La Jolla),32.838127,-117.249782,6,omnivert.nc,0,0
+29,Carlsbad Hills Water Tower,33.165387,-117.322509,9,omnivert.nc,0,0
+30,Navy Gateway Tower at Naval Amphibious Base Coronado,32.672025,-117.163378,35,omnivert.nc,0,0
