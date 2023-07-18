@@ -44,7 +44,7 @@ import dpa_mgr_SEA as dpa_mgr
 def plotAggEmissionAtPrtnPointPerCh(plot_dir, dpa_names, protected_points, channels, 
                                     aggEmission_keepList, 
                                     noise_floor, prtn_threshold_list):
-  """Plot aggregated emission at protection point(s) for each channel when the DPA is active/inactive.
+  """Plot aggregated emission at protection point(s) for each channel when the DPA is active.
 
   Inputs:
     plot_dir:               The directory to contain the plot(s).
@@ -91,7 +91,7 @@ def plotAggEmissionAtPrtnPointPerCh(plot_dir, dpa_names, protected_points, chann
 
 def plotAggEmissionAtSensorPerLoc(plot_dir, dpa_names, sensor_list, channels, 
                                   aggEmission_keepList, noise_floor):
-  """Plot aggregated emission at each sensor location for all channels when the DPA is active/inactive.
+  """Plot aggregated emission at each sensor location for all channels when the DPA is active.
 
   Inputs:
     plot_dir:               The directory to contain the plot(s).
@@ -140,7 +140,7 @@ def plotAggEmissionAtSensorPerLoc(plot_dir, dpa_names, sensor_list, channels,
 def plotAggEmissionAtSensorPerCh(plot_dir, dpa_names, sensor_list, channels, 
                                  aggEmission_keepList, 
                                  noise_floor, prtn_threshold_list):
-  """Plot aggregated emission at sensor location(s) for each channel when the DPA is active/inactive.
+  """Plot aggregated emission at sensor location(s) for each channel when the DPA is active.
 
   Inputs:
     plot_dir:               The directory to contain the plot(s).
