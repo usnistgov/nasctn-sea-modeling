@@ -18,6 +18,7 @@ The code in this repository depend on the WInnForum's SAS test harness code and 
 * Download *GB-DPAS.kml* file from ([https://ntia.gov/fcc-filing/ntia-letter-fcc-commercial-operations-3550-3650-mhz-band](https://ntia.gov/fcc-filing/ntia-letter-fcc-commercial-operations-3550-3650-mhz-band)) and save as *gb-dpas.kml* under `../Spectrum-Access-System/data/ntia/` folder
 * Install *xarray* package and its dependencies ([https://docs.xarray.dev/en/stable/getting-started-guide/installing.html](https://docs.xarray.dev/en/stable/getting-started-guide/installing.html))
 * Install *scipy* package ([https://scipy.org/install/](https://scipy.org/install/))
+
   Note: Validating the setup using the `test_config.py` under `../Spectrum-Access-System/src/harness/reference_models` folder might produce error messages for missing NED terrain tiles or missing NLCD land cover. However, these error messages might not affect the execution of NASCTN SEA modeling code.
 
 ## Usage
