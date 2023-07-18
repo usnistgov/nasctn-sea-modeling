@@ -42,7 +42,7 @@ import dpa_mgr_SEA as dpa_mgr
 
 
 def plotAggEmissionAtPrtnPointPerCh(plot_dir, dpa_names, protected_points, channels, 
-                                    aggEmission_nbrList, aggEmission_keepList, 
+                                    aggEmission_keepList, 
                                     noise_floor, prtn_threshold_list):
   """Plot aggregated emission at protection point(s) for each channel when the DPA is active/inactive.
 
@@ -51,7 +51,6 @@ def plotAggEmissionAtPrtnPointPerCh(plot_dir, dpa_names, protected_points, chann
     dpa_names:              A list of DPA names.
     protected_points:       A list of namedtuple (latitude, longitude) of the protection points.
     channels:               A list of tuple (low frequency, high frequency) of all channels.
-    aggEmission_nbrList:    The aggregated emission when the DPA is inactive.
     aggEmission_keepList:   The aggreagted emission when the DPA is active.
     noise_floor:            Projected noise floor of sensor (dBm/10 MHz).
     prtn_threshold_list:    A list of protection thresholds of the DPAs (dBm/10 MHz).
@@ -60,7 +59,6 @@ def plotAggEmissionAtPrtnPointPerCh(plot_dir, dpa_names, protected_points, chann
     Plot(s) to be saved in the plot_dir folder.
   """
   pt_number = range(1, len(protected_points)+1)
-  aggEmission_nbrList = np.array(aggEmission_nbrList)
   aggEmission_keepList = np.array(aggEmission_keepList)
   
   for i, channel in enumerate(channels):
@@ -69,8 +67,7 @@ def plotAggEmissionAtPrtnPointPerCh(plot_dir, dpa_names, protected_points, chann
     plt.style.use('tableau-colorblind10')
     prtn_threshold = prtn_threshold_list[i]
 
-    ax.plot(pt_number, aggEmission_nbrList[i, :], 'o', color='#006BA4', label='DPA inactive')
-    ax.plot(pt_number, aggEmission_keepList[i, :], '^', color='#FF800E', label='DPA active')
+    ax.plot(pt_number, aggEmission_keepList[i, :], '^', color='#FF800E', label='DPA always-on')
     plt.plot([pt_number[0]-1, pt_number[-1]+1], [noise_floor, noise_floor], 'k:', label='Noise floor')
     plt.plot([pt_number[0]-1, pt_number[-1]+1], [prtn_threshold, prtn_threshold], 'k--', label='Threshold')
   
@@ -93,7 +90,7 @@ def plotAggEmissionAtPrtnPointPerCh(plot_dir, dpa_names, protected_points, chann
 
 
 def plotAggEmissionAtSensorPerLoc(plot_dir, dpa_names, sensor_list, channels, 
-                                  aggEmission_nbrList, aggEmission_keepList, noise_floor):
+                                  aggEmission_keepList, noise_floor):
   """Plot aggregated emission at each sensor location for all channels when the DPA is active/inactive.
 
   Inputs:
@@ -102,7 +99,6 @@ def plotAggEmissionAtSensorPerLoc(plot_dir, dpa_names, sensor_list, channels,
     sensor_list:            A list of namedtuple (index, location, latitude, longitude, 
                             height, antenna_filename, azimuth, downtilt) of the sensor locations.
     channels:               A list of tuple (low frequency, high frequency) of all channels.
-    aggEmission_nbrList:    The aggregated emission when the DPA is inactive.
     aggEmission_keepList:   The aggreagted emission when the DPA is active.
     noise_floor:            Projected noise floor of sensor (dBm/10 MHz).
     
@@ -110,15 +106,13 @@ def plotAggEmissionAtSensorPerLoc(plot_dir, dpa_names, sensor_list, channels,
     Plot(s) to be saved in the plot_dir folder.
   """
   channel_number = range(1, len(channels)+1)
-  aggEmission_nbrList = np.array(aggEmission_nbrList)
   aggEmission_keepList = np.array(aggEmission_keepList)
   
   for i in range(len(sensor_list)):
     fig, ax = plt.subplots(1, 1)
     plt.style.use('tableau-colorblind10')
     
-    ax.plot(channel_number, aggEmission_nbrList[:, i], 'o', color='#006BA4', label='DPA inactive')
-    ax.plot(channel_number, aggEmission_keepList[:, i], '^', color='#FF800E', label='DPA active')
+    ax.plot(channel_number, aggEmission_keepList[:, i], '^', color='#FF800E', label='DPA always-on')
     plt.plot([channel_number[0]-1, channel_number[-1]+1], [noise_floor, noise_floor], 'k:', label='Noise floor')
 
     txt_size = 14
@@ -144,7 +138,7 @@ def plotAggEmissionAtSensorPerLoc(plot_dir, dpa_names, sensor_list, channels,
 
 
 def plotAggEmissionAtSensorPerCh(plot_dir, dpa_names, sensor_list, channels, 
-                                 aggEmission_nbrList, aggEmission_keepList, 
+                                 aggEmission_keepList, 
                                  noise_floor, prtn_threshold_list):
   """Plot aggregated emission at sensor location(s) for each channel when the DPA is active/inactive.
 
@@ -154,7 +148,6 @@ def plotAggEmissionAtSensorPerCh(plot_dir, dpa_names, sensor_list, channels,
     sensor_list:            A list of namedtuple (index, location, latitude, longitude, 
                             height, antenna_filename, azimuth, downtilt) of the sensor locations.
     channels:               A list of tuple (low frequency, high frequency) of all channels.
-    aggEmission_nbrList:    The aggregated emission when the DPA is inactive.
     aggEmission_keepList:   The aggreagted emission when the DPA is active.
     noise_floor:            Projected noise floor of sensor (dBm/10 MHz).
     prtn_threshold_list:    A list of protection thresholds of the DPAs (dBm/10 MHz).
@@ -163,7 +156,6 @@ def plotAggEmissionAtSensorPerCh(plot_dir, dpa_names, sensor_list, channels,
     Plot(s) to be saved in the plot_dir folder.
   """
   pt_number = range(1, len(sensor_list)+1)
-  aggEmission_nbrList = np.array(aggEmission_nbrList)
   aggEmission_keepList = np.array(aggEmission_keepList)
   
   for i, channel in enumerate(channels):
@@ -172,8 +164,7 @@ def plotAggEmissionAtSensorPerCh(plot_dir, dpa_names, sensor_list, channels,
     plt.style.use('tableau-colorblind10')
     prtn_threshold = prtn_threshold_list[i]
 
-    ax.plot(pt_number, aggEmission_nbrList[i, :], 'o', color='#006BA4', label='DPA inactive')
-    ax.plot(pt_number, aggEmission_keepList[i, :], '^', color='#FF800E', label='DPA active')
+    ax.plot(pt_number, aggEmission_keepList[i, :], '^', color='#FF800E', label='DPA always-on')
     plt.plot([pt_number[0]-1, pt_number[-1]+1], [noise_floor, noise_floor], 'k:', label='Noise floor')
     plt.plot([pt_number[0]-1, pt_number[-1]+1], [prtn_threshold, prtn_threshold], 'k--', label='Threshold')
   
@@ -220,9 +211,7 @@ if __name__ == '__main__':
   noise_floor = -99         # Noise floor (dBm/10 MHz) (290 K, 5 dB NF)
   
   # Get aggregate emissions at protection points and sensor locations for all channels
-  aggEmission_nbrList_prtnPt_allCh = []
   aggEmission_keepList_prtnPt_allCh = []
-  aggEmission_nbrList_sensor_allCh = []
   aggEmission_keepList_sensor_allCh = []
   prtn_threshold_allCh = []
   
@@ -239,20 +228,17 @@ if __name__ == '__main__':
     # Get aggregate emission results at protection points
     fname = result_dir / (dpa_name+'_'+channel_str+'_aggEmission_prtnPoint.npy')
     (channel, protected_points, emission_nbrList_prtnPt, emission_keepList_prtnPt) = np.load(fname, allow_pickle=True)
-    max_emission_nbrList_prtnPt = [np.amax(a) for a in np.array(emission_nbrList_prtnPt)] # Max value over all radar rotation azimuths
-    max_emission_keepList_prtnPt = [np.amax(a) for a in np.array(emission_keepList_prtnPt)]
-    aggEmission_nbrList_prtnPt_allCh.append(max_emission_nbrList_prtnPt)
+    max_emission_keepList_prtnPt = [np.amax(a) for a in np.array(emission_keepList_prtnPt)] # Max value over all radar rotation azimuths
     aggEmission_keepList_prtnPt_allCh.append(max_emission_keepList_prtnPt)
 
     # Get aggregate emission results at sensor locations
     fname = result_dir / (dpa_name+'_'+channel_str+'_aggEmission_sensor.npy')
     (channel, sensor_list, emission_nbrList_sensor, emission_keepList_sensor) = np.load(fname, allow_pickle=True)
-    aggEmission_nbrList_sensor_allCh.append(emission_nbrList_sensor)
     aggEmission_keepList_sensor_allCh.append(emission_keepList_sensor)
   
   # Plot aggregate emissions at protection points
-  plotAggEmissionAtPrtnPointPerCh(plot_dir, dpa_names, protected_points, channels, aggEmission_nbrList_prtnPt_allCh, aggEmission_keepList_prtnPt_allCh, noise_floor, prtn_threshold_allCh)
+  plotAggEmissionAtPrtnPointPerCh(plot_dir, dpa_names, protected_points, channels, aggEmission_keepList_prtnPt_allCh, noise_floor, prtn_threshold_allCh)
 
   # Plot aggregate emissions at all sensor locations for each channel
-  plotAggEmissionAtSensorPerCh(plot_dir, dpa_names, sensor_list, channels, aggEmission_nbrList_sensor_allCh, aggEmission_keepList_sensor_allCh, noise_floor, prtn_threshold_allCh)
+  plotAggEmissionAtSensorPerCh(plot_dir, dpa_names, sensor_list, channels, aggEmission_keepList_sensor_allCh, noise_floor, prtn_threshold_allCh)
 
