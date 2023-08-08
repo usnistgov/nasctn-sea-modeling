@@ -1,6 +1,6 @@
 # NASCTN SEA Modeling Repository
 
-This repository contains code used in the modeling for the National Advanced Spectrum and Communications Test Network (NASCTN) Sharing Ecosystem Assessment (SEA) project. It runs dynamic protection area (DPA) move list algorithm and computes aggregate emission at sensor location in the Citizens Broadband Radio Service (CBRS) band. Some of the scripts were derived from the WInnForum's reference implementation of the Spectrum Access System (SAS) test harness.
+This repository contains code used in the modeling for the National Advanced Spectrum and Communications Test Network (NASCTN) Sharing Ecosystem Assessment (SEA) project. It runs dynamic protection area (DPA) move list algorithm and computes aggregate emission at protection points and sensor locations in the Citizens Broadband Radio Service (CBRS) band. Some of the scripts were derived from the WInnForum's reference implementation of the Spectrum Access System (SAS) test harness.
 
 ## Data
 
@@ -12,7 +12,7 @@ The data required to run the code need to be stored in the `data/` folder, which
 
 The code in this repository depend on the WInnForum's SAS test harness code and data. In order to run the code correctly, it's required to:
 * Install all the packages and software listed at [https://github.com/Wireless-Innovation-Forum/Spectrum-Access-System](https://github.com/Wireless-Innovation-Forum/Spectrum-Access-System)
-  Note: Install *shapely* version below 2.0 and *numpy* version below 1.24 to avoid deprecation warning and error messages. 
+  Note: Install *shapely* version below 2.0 and *numpy* version below 1.24 to avoid deprecation error messages. 
 * Download the geo data (e.g., USGS NED Terrain and NLCD Land cover data, etc. ) by following the instructions at [https://github.com/Wireless-Innovation-Forum/Common-Data](https://github.com/Wireless-Innovation-Forum/Common-Data) 
 * Set up and compile extension modules for propagation models by following the instructions at [https://github.com/Wireless-Innovation-Forum/Spectrum-Access-System/tree/master/src/harness/reference_models/propagation](https://github.com/Wireless-Innovation-Forum/Spectrum-Access-System/tree/master/src/harness/reference_models/propagation)
 * Download *GB-DPAS.kml* file from ([https://ntia.gov/fcc-filing/ntia-letter-fcc-commercial-operations-3550-3650-mhz-band](https://ntia.gov/fcc-filing/ntia-letter-fcc-commercial-operations-3550-3650-mhz-band)) and save as *gb-dpas.kml* under `../Spectrum-Access-System/data/ntia/` folder
@@ -29,9 +29,9 @@ The code in this repository depend on the WInnForum's SAS test harness code and 
    git clone https://github.com/usnistgov/nasctn-sea-modeling
    ```
 
-2. Update the `../Spectrum-Access-System/src/harness` folder with local directory in the following scripts `src/mainscript_E_DPAs.py`, `src/mainscript_GB_DPAs.py`, `src/visualization_E_DPAs.py`, and `src/visualization_GB_DPAs.py`.
+2. Update the `../Spectrum-Access-System/src/harness` folder with local directory in the following scripts `src/mainscript_E_DPAs.py`, `src/mainscript_GB_DPAs.py`, `src/mainscript_GMM.py`, `src/visualization_E_DPAs.py`, and `src/visualization_GB_DPAs.py`.
 
-   Note that `src/visualization_E_DPAs.py` and `src/visualization_GB_DPAs.py` are optional, which can used for plotting the results.
+   Note that `src/visualization_*.py` scripts are optional, which can used for plotting the results.
 
 3. Configure the number of parallel processes, i.e., `num_processes` parameter, in the following scripts `src/mainscript_E_DPAs.py` and `src/mainscript_GB_DPAs.py`.
 
@@ -39,28 +39,35 @@ The code in this repository depend on the WInnForum's SAS test harness code and 
 
    ```python
    ########## For E-DPAs (e.g., East1) ##########
-   # run move list algorithm and compute aggregate emission at SEA sensor locations
+   # run move list algorithm and compute aggregate emission at protection points and SEA sensor locations
    python mainscript_E_DPAs.py --dpa_name="East1"
 
    # plot aggregate emissions when DPA is active and inactive
    python visualization_E_DPAs.py --dpa_name="East1"
 
    ########## For GB-DPAs (always-on DPA Camp Pendleton) ##########
-   # run move list algorithm and compute aggregate emission at SEA sensor locations
+   # run move list algorithm and compute aggregate emission at protection points and SEA sensor locations
    python mainscript_GB_DPAs.py 
 
    # plot aggregate emissions when DPA is active and inactive
    python visualization_GB_DPAs.py
 
+   ########## For Green Mountain Mesa (GMM) sensor location ##########
+   # compute aggregate emission at GMM sensor location
+   python mainscript_GMM.py
+
+   # plot aggregate emissions
+   python visualization_GMM.py
+
    ########## For multiple DPAs: edit and run Bash scripts ##########
-   # run move list algorithm and compute aggregate emission at SEA sensor locations
+   # run move list algorithm and compute aggregate emission at protection points and SEA sensor locations
    bash mainscript_bash.sh 
 
    # plot aggregate emissions when DPA is active and inactive
    bash visualization_bash.sh
    ```
 
-Note: See the `examples/` folder for examples of code, data, results, and plots for some E-DPAs and the GB-DPA Camp Pendleton. Note that the FAD data in the `examples/data/fad/` folder is fake and not related to the real FAD data.
+Note: See the `examples/` folder for examples of code, data, results, and plots for some E-DPAs, GB-DPA Camp Pendleton, and GMM sensor location. Note that the FAD data in the `examples/data/fad/` folder is fake and not related to the real FAD data.
 
 ## NIST Software Licensing Statement
 

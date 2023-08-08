@@ -7,7 +7,14 @@
             "size": 21628507,
             "url": "https://localhost/cbsd/activity_dump_file_cbsd0.json",
             "version": "v1.3"
+        },
+        {
+            "checksum": "38b1585861e86677d3177886fbacea8bc664a8c8",
+            "recordType": "cbsd",
+            "size": 2224487,
+            "url": "https://localhost/cbsd/activity_dump_file_cbsd1.json",
+            "version": "v1.3"
         }
     ],
-    "generationDateTime": "2023-06-23T16:19:01Z"
+    "generationDateTime": "2023-07-17T19:50:44Z"
 }
