@@ -67,7 +67,7 @@ def plotAggEmissionAtPrtnPointPerCh(plot_dir, dpa_names, protected_points, chann
     plt.style.use('tableau-colorblind10')
     prtn_threshold = prtn_threshold_list[i]
 
-    ax.plot(pt_number, aggEmission_keepList[i, :], '^', color='#FF800E', label='DPA always-on')
+    ax.plot(pt_number, aggEmission_keepList[i, :], '^', color='#595959', label='DPA always-on (ref. ant.)')
     plt.plot([pt_number[0]-1, pt_number[-1]+1], [noise_floor, noise_floor], 'k:', label='Noise floor')
     plt.plot([pt_number[0]-1, pt_number[-1]+1], [prtn_threshold, prtn_threshold], 'k--', label='Threshold')
   
@@ -187,6 +187,56 @@ def plotAggEmissionAtSensorPerCh(plot_dir, dpa_names, sensor_list, channels,
     plt.close()
 
 
+def plotAggEmissionAtSensorUsingRefAntPerCh(plot_dir, dpa_names, sensor_list, channels, 
+                                 aggEmission_keepList, 
+                                 noise_floor, prtn_threshold_list):
+  """Plot aggregated emission at sensor location(s) for each channel when the DPA is active.
+
+  Inputs:
+    plot_dir:               The directory to contain the plot(s).
+    dpa_name:               The DPA name.
+    sensor_list:            A list of namedtuple (index, location, latitude, longitude, 
+                            height, antenna_filename, azimuth, downtilt) of the sensor locations.
+    channels:               A list of tuple (low frequency, high frequency) of all channels.
+    aggEmission_keepList:   The aggreagted emission when the DPA is active.
+    noise_floor:            Projected noise floor of sensor (dBm/10 MHz).
+    prtn_threshold_list:    A list of protection thresholds of the DPAs (dBm/10 MHz).
+    
+  Returns:
+    Plot(s) to be saved in the plot_dir folder.
+  """
+  pt_number = range(1, len(sensor_list)+1)
+  aggEmission_keepList = np.array(aggEmission_keepList)
+  
+  for i, channel in enumerate(channels):
+    channel_str = 'channel'+str(channel[0])+'to'+str(channel[1])
+    fig, ax = plt.subplots(1, 1)
+    plt.style.use('tableau-colorblind10')
+    prtn_threshold = prtn_threshold_list[i]
+
+    ax.plot(pt_number, aggEmission_keepList[i, :], '^', color='#595959', label='DPA always-on (ref. ant.)')
+    plt.plot([pt_number[0]-1, pt_number[-1]+1], [noise_floor, noise_floor], 'k:', label='Noise floor')
+    plt.plot([pt_number[0]-1, pt_number[-1]+1], [prtn_threshold, prtn_threshold], 'k--', label='Threshold')
+  
+    txt_size = 14
+    ax.set_title('Channel '+str(i+1)+': ('+str(channel[0])+'-'+str(channel[1])+') MHz', fontsize=txt_size)
+    ax.set_ylabel('Aggregate emission (dBm/10 MHz)', fontsize=txt_size)
+    ax.set_xlabel('Sensor location number', fontsize=txt_size)
+
+    major_ytick = range(-180, 0, 20)
+    ax.set_yticks(major_ytick)
+    ax.grid(which='major', linestyle='-', alpha=0.5)
+    ax.set_ylim(-180, 0)
+    ax.set_xlim(pt_number[0]-1, pt_number[-1]+1)
+    ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+
+    ax.legend(loc='upper right')
+    plt.tight_layout()
+    plot_fname = plot_dir / (dpa_names[i]+'_'+channel_str+'_aggEmission_sensor_refAnt.png')
+    plt.savefig(plot_fname)
+    plt.close()
+
+
 if __name__ == '__main__':
   
   # DPA names and channels
@@ -213,6 +263,7 @@ if __name__ == '__main__':
   # Get aggregate emissions at protection points and sensor locations for all channels
   aggEmission_keepList_prtnPt_allCh = []
   aggEmission_keepList_sensor_allCh = []
+  aggEmission_keepList_sensor_refAnt_allCh = []
   prtn_threshold_allCh = []
   
   for i_dpa, dpa_name in enumerate(dpa_names):
@@ -228,17 +279,26 @@ if __name__ == '__main__':
     # Get aggregate emission results at protection points
     fname = result_dir / (dpa_name+'_'+channel_str+'_aggEmission_prtnPoint.npy')
     (channel, protected_points, emission_nbrList_prtnPt, emission_keepList_prtnPt) = np.load(fname, allow_pickle=True)
-    max_emission_keepList_prtnPt = [np.amax(a) for a in np.array(emission_keepList_prtnPt)] # Max value over all radar rotation azimuths
+    max_emission_keepList_prtnPt = [np.amax(a) for a in np.array(emission_keepList_prtnPt, dtype=object)] # Max value over all radar rotation azimuths
     aggEmission_keepList_prtnPt_allCh.append(max_emission_keepList_prtnPt)
 
     # Get aggregate emission results at sensor locations
     fname = result_dir / (dpa_name+'_'+channel_str+'_aggEmission_sensor.npy')
     (channel, sensor_list, emission_nbrList_sensor, emission_keepList_sensor) = np.load(fname, allow_pickle=True)
     aggEmission_keepList_sensor_allCh.append(emission_keepList_sensor)
+    
+    # Get aggregate emission results at sensor locations using reference azimuth antenna pattern
+    fname = result_dir / (dpa_name+'_'+channel_str+'_aggEmission_sensor_refAnt.npy')
+    (channel, sensor_list, emission_nbrList_sensor_refAnt, emission_keepList_sensor_refAnt) = np.load(fname, allow_pickle=True)
+    max_emission_keepList_sensor_refAnt = [np.amax(a) for a in np.array(emission_keepList_sensor_refAnt, dtype=object)] # Max value over all radar rotation azimuths
+    aggEmission_keepList_sensor_refAnt_allCh.append(max_emission_keepList_sensor_refAnt)
   
   # Plot aggregate emissions at protection points
   plotAggEmissionAtPrtnPointPerCh(plot_dir, dpa_names, protected_points, channels, aggEmission_keepList_prtnPt_allCh, noise_floor, prtn_threshold_allCh)
 
   # Plot aggregate emissions at all sensor locations for each channel
   plotAggEmissionAtSensorPerCh(plot_dir, dpa_names, sensor_list, channels, aggEmission_keepList_sensor_allCh, noise_floor, prtn_threshold_allCh)
+  
+  # Plot aggregate emissions at all sensor locations using reference antenna for each channel
+  plotAggEmissionAtSensorUsingRefAntPerCh(plot_dir, dpa_names, sensor_list, channels, aggEmission_keepList_sensor_refAnt_allCh, noise_floor, prtn_threshold_allCh)
 

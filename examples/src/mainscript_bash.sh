@@ -35,6 +35,12 @@
 
 echo " "
 echo "***************************************************"
+echo "Green Mountain Mesa sensor"
+echo " "
+python mainscript_GMM.py
+
+echo " "
+echo "***************************************************"
 echo "GB-DPA name: Camp Pendleton"
 echo " "
 python mainscript_GB_DPAs.py

@@ -128,6 +128,13 @@ if __name__ == '__main__':
     emission_keepList_sensor = dpa_ref.CalcAggEmissionAtSensor(dpa_channel, sensor_list, sensor_dir, grants=keepList)
     fname = result_dir / (dpa_name+'_'+dpa_channel_str+'_aggEmission_sensor.npy')
     np.save(fname, np.array([dpa_channel, sensor_list, emission_nbrList_sensor, emission_keepList_sensor], dtype=object))
+    
+    # Compute aggregate emissions at candidate sensor locations using reference azimuth antenna pattern
+    print('Compute aggregate emissions at sensor locations using reference azimuth antenna pattern')
+    emission_nbrList_sensor_refAnt = dpa_ref.CalcAggEmissionAtSensorUsingRefAnt(dpa_channel, sensor_list, grants=neighborList, do_max=False)
+    emission_keepList_sensor_refAnt = dpa_ref.CalcAggEmissionAtSensorUsingRefAnt(dpa_channel, sensor_list, grants=keepList, do_max=False)
+    fname = result_dir / (dpa_name+'_'+dpa_channel_str+'_aggEmission_sensor_refAnt.npy')
+    np.save(fname, np.array([dpa_channel, sensor_list, emission_nbrList_sensor_refAnt, emission_keepList_sensor_refAnt], dtype=object))
 
   end_time = time.time()
   print('Computation time: ' + str(end_time - start_time))

@@ -71,6 +71,11 @@ Example usage:
   # Calculate aggregate emission from grants to a sensor location for a given channel
   channel = (3650, 3660)
   emission_per_sensor = dpa.CalcAggEmissionAtSensor(channel)
+  
+  # Calculate aggregate emission from grants to a sensor location for a given channel
+  # using reference azimuth antenna pattern
+  channel = (3650, 3660)
+  emission_per_sensor_ref_ant = dpa.CalcAggEmissionAtSensorUsingRefAnt(channel)
 
   # Check the interference according to Winnforum IPR tests
   status = dpa.CheckInterference(sas_uut_keep_list, margin_db=2)
@@ -451,9 +456,8 @@ class Dpa(object):
     max_emission = pool.map(emissionCalculator,
                           self.protected_points)
     return max_emission
-    
-  def CalcAggEmissionAtSensor(self, channel, sensor_list, sensor_dir, grants, num_iter=None):
 
+  def CalcAggEmissionAtSensor(self, channel, sensor_list, sensor_dir, grants, num_iter=None):
     """Calculates aggregate emission from grants to each sensor location.
 
     Args:
@@ -462,7 +466,6 @@ class Dpa(object):
       sensor_dir:       Directory contains sensor files (location, antenna)
       grants:           A list of grants
       num_iter:         The number of Monte Carlo iteration when calculating the aggregate emission.
-      do_max:           If True, returns the maximum aggregate emission over all azimuths.
 
     Returns:
       The 95% aggregate emission per location, as a list.
@@ -482,7 +485,39 @@ class Dpa(object):
     max_emission = pool.map(emissionCalculator,
                             sensor_list)
     return max_emission
+
+  def CalcAggEmissionAtSensorUsingRefAnt(self, channel, sensor_list, grants, num_iter=None, do_max=True):
+    """Calculates aggregate emission from grants to each sensor location using reference azimuth antenna pattern.
+
+    Args:
+      channel:          A channel as tuple (low_freq_mhz, high_freq_mhz)
+      sensor_list:      A list of sensors
+      grants:           A list of grants
+      num_iter:         The number of Monte Carlo iteration when calculating the aggregate emission.
+      do_max:           If True, returns the maximum aggregate emission over all azimuths.
+
+    Returns:
+      The 95% aggregate emission per location, as a list.
+    """
     
+    if num_iter is None:
+      num_iter = Dpa.num_iteration
+    emissionCalculator = functools.partial(
+        ml.calcAggEmissionAtSensorUsingRefAnt,
+        low_freq=channel[0] * 1e6,
+        high_freq=channel[1] * 1e6,
+        grants=grants,
+        inc_ant_height=self.radar_height,
+        num_iter=num_iter,
+        beamwidth=self.beamwidth,
+        min_azimuth=self.azimuth_range[0],
+        max_azimuth=self.azimuth_range[1],
+        do_max=do_max)
+
+    pool = mpool.Pool()
+    max_emission = pool.map(emissionCalculator,
+                            sensor_list)
+    return max_emission
 
   def CheckInterference(self, sas_uut_active_grants, margin_db,
                         channel=None, num_iter=None,

@@ -48,6 +48,8 @@
 #   - 'moveListConstraint()': calculates the move list for one point
 #   - 'calcAggregatedInterference()': calculates the 95% quantile interference for one point
 #   - 'calcAggEmissionAtSensor()': calculates aggregate emission from grants to sensor
+#   - 'calcAggEmissionAtSensorUsingRefAnt()': calculates aggregate emission from grants to sensor
+#                                             using reference azimuth antenna pattern
 #==================================================================================
 
 from __future__ import absolute_import
@@ -789,6 +791,77 @@ def calcAggEmissionAtSensor(sensor,
   
   return agg_emission
 
+def calcAggEmissionAtSensorUsingRefAnt(sensor,
+                                       low_freq,
+                                       high_freq,
+                                       grants,
+                                       inc_ant_height,
+                                       num_iter,
+                                       beamwidth,
+                                       min_azimuth=0,
+                                       max_azimuth=360,
+                                       do_max=False):
+
+  """Computes the 95% aggregated emission at a sensor location using reference azimuth antenna pattern.
+
+  Inputs:
+    sensor:            A namedtuple with sensor information, with attributes 'index', 'location', 
+                       'latitude', 'longitude', 'height',
+                       'antenna_filename', 'azimuth', 'downtilt'
+    low_freq:          The low frequency of sensor (Hz).
+    high_freq:         The high frequency of sensor (Hz).
+    grants:            A list of CBSD |data.CbsdGrantInfo| active grants.
+    inc_ant_height:    The reference incumbent antenna height (meters).
+    num_iter:          The number of Monte Carlo iterations.
+    beamwidth:         The protection antenna beamwidth (degree).
+    min_azimuth:       The minimum azimuth (degrees) for incumbent transmission.
+    max_azimuth:       The maximum azimuth (degrees) for incumbent transmission.
+    do_max:            If True, returns the maximum interference over all radar azimuth.
+        
+  Returns:
+    The 95% aggregated emission at sensor location (dB) either:
+      - as a vector (ndarray) of length N, where the element k corresponds to
+          azimuth k * (beamwith/2). The length N is thus equal to 2 * 360 / beamwith,
+          (or 2 * azimuth_range / beamwidth if using a smaller azimuth range than
+           360 degrees, as specified by min_azimuth/max_azimuth).
+      - or the maximum over all radar azimuth, if `do_max` is set to True.
+  """
+  dpa_type = findDpaType(low_freq, high_freq)
+  if not beamwidth: beamwidth = 360
+  
+  # DPA Purge algorithm for OOB
+  if dpa_type is DpaType.OUT_OF_BAND:
+    cbsds_grants_map = defaultdict(list)
+    for grant in grants:
+      key = grant.uniqueCbsdKey()
+      _addMinFreqGrantToFront(cbsds_grants_map[key], grant)
+    # Reset the grants to the minimum frequency grant for each CBSDs.
+    grants = [cbsd_grants[0] for cbsd_grants in cbsds_grants_map.values()]
+
+  if not grants:
+    return np.asarray(-1000)
+
+  emission_matrix = np.zeros((num_iter, len(grants)))
+  hor_dirs = np.zeros(len(grants))
+  for k, grant in enumerate(grants):
+    emission, _ = computeEmissionAtSensor(grant, low_freq, high_freq,
+                                          sensor.latitude, sensor.longitude, inc_ant_height,
+                                          num_iter, dpa_type)
+    emission_matrix[:,k] = emission.randomEmission
+    hor_dirs[k] = emission.hor_sensor
+    
+  emission_matrix = 10**(emission_matrix / 10.)
+  azimuths = findAzimuthRange(min_azimuth, max_azimuth, beamwidth)
+  
+  agg_emission = np.zeros(len(azimuths))
+  for k, azi in enumerate(azimuths):
+    ref_ant_gains = antenna.GetRadarNormalizedAntennaGains(hor_dirs, azi, beamwidth)
+    emission_with_ant_gain = emission_matrix * 10**(ref_ant_gains / 10.0)
+    agg_emission[k] = np.percentile(np.sum(emission_with_ant_gain, axis=1),
+                                  PROTECTION_PERCENTILE, interpolation='lower')
+  agg_emission = 10 * np.log10(agg_emission)
+  return np.max(agg_emission) if do_max else agg_emission
+  
 class InterferenceCacheManager(cache.CacheManager):
   """Interference cache context manager.
 
