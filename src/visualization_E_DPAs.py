@@ -440,7 +440,7 @@ if __name__ == '__main__':
  
   # Plot aggregate emissions at sensor locations using reference azimuth antenna pattern
   plotAggEmissionAtSensorUsingRefAntPerLoc(plot_dir, dpa_name, sensor_list, channels,
-                                           aggEmission_nbrList_sensor_allCh,
+                                           aggEmission_nbrList_sensor_refAnt_allCh,
                                            aggEmission_keepList_sensor_refAnt_allCh,
                                            noise_floor, prtn_threshold)
   plotAggEmissionAtSensorUsingRefAntPerCh(plot_dir, dpa_name, sensor_list, channels,
