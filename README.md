@@ -5,7 +5,7 @@ This repository contains code used in the modeling for the National Advanced Spe
 ## Data
 
 The data required to run the code need to be stored in the `data/` folder, which contains `fad/` and `sensor/` subfolders:
-* The `fad/` subfolder contains information of Citizens Broadband Radio Service Device (CBSD) grants, which can be extracted from real Full Activity Dump (FAD) data files. The `fad/` subfolder in this repository is currently empty due to propriety information.
+* The `fad/` subfolder contains information of Citizens Broadband Radio Service Device (CBSD) grants, which can be extracted from real Full Activity Dump (FAD) data files. The current `fad/` subfolder is empty due to propriety information.
 * The `sensor/` subfolder contains information of SEA sensors (e.g., location, height, 2D antenna data, etc.) and associated 2D antenna gain .nc files.
 
 ## Code prerequisites
