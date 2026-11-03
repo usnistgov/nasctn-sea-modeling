@@ -27,38 +27,32 @@ The code in this repository depend on the WInnForum's SAS test harness code and 
    ```bash
    git clone https://github.com/usnistgov/nasctn-sea-modeling
    ```
-   
+
 2. Update the `../Spectrum-Access-System/src/harness` folder with local directory in the following scripts:
 
  ```bash
-   `src/mainscript_E_DPAs.py`
-   `src/mainscript_GB_DPAs.py`
-   `visualization/cbsd_grant_list_analysis_E_DPAs.ipynb`
-   `visualization/cbsd_grant_list_analysis_GB_DPAs.ipynb`
-   `visualization/aggregate_emission_analysis_E_DPAs.ipynb`
-   `visualization/aggregate_emission_analysis_GB_DPAs.ipynb`
+   src/mainscript_E_DPAs.py
+   src/mainscript_GB_DPAs.py
+   visualization/cbsd_grant_list_analysis_E_DPAs.ipynb
+   visualization/cbsd_grant_list_analysis_GB_DPAs.ipynb
+   visualization/aggregate_emission_analysis_E_DPAs.ipynb
+   visualization/aggregate_emission_analysis_GB_DPAs.ipynb
    ```
 
    Note that `visualization/*.ipynb` scripts are optional, which can used for plotting the results for a specific DPA.
 
 3. Configure the number of parallel processes, i.e., `num_processes` parameter, in the following scripts `src/mainscript_E_DPAs.py` and `src/mainscript_GB_DPAs.py`.
 
-4. Navigate to the `src/` folder and type the following commands to run the mainscripts:
+4. Navigate to the `src/` folder and type the following commands to run move list algorithm and compute aggregate emission at protection points and SEA sensor locations:
 
    ```python
    ########## For E-DPAs (e.g., East1) ##########
-   # run move list algorithm and compute aggregate emission at protection points and SEA sensor locations
    python mainscript_E_DPAs.py --dpa_name="East1"
 
    ########## For GB-DPAs (always-on DPA Camp Pendleton) ##########
-   # run move list algorithm and compute aggregate emission at protection points and SEA sensor locations
    python mainscript_GB_DPAs.py --dpa_name="MCBPendleton"
 
-   # plot aggregate emissions
-   python visualization_GMM.py
-
    ########## For multiple DPAs: edit and run Bash scripts ##########
-   # run move list algorithm and compute aggregate emission at protection points and SEA sensor locations
    bash mainscript_bash.sh 
    ```
 
