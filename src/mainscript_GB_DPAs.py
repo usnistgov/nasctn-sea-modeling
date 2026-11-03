@@ -73,7 +73,7 @@ if __name__ == '__main__':
   data_dir = main_dir / 'data'
   fad_dir = data_dir / 'fad'
   sensor_dir = data_dir / 'sensor'
-  results_dir = main_dir / 'outputs'/ 'result' / dpa_main_name
+  results_dir = main_dir / 'outputs'/ 'results' / dpa_main_name
   os.makedirs(results_dir, exist_ok=True)
   
   # Sensor filename
