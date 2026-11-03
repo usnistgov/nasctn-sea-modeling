@@ -14,7 +14,7 @@ The code in this repository depend on the WInnForum's SAS test harness code and 
 * Install all the packages and software listed at [https://github.com/Wireless-Innovation-Forum/Spectrum-Access-System](https://github.com/Wireless-Innovation-Forum/Spectrum-Access-System)
 * Download the geo data (e.g., USGS NED Terrain and NLCD Land cover data, etc. ) by following the instructions at [https://github.com/Wireless-Innovation-Forum/Common-Data](https://github.com/Wireless-Innovation-Forum/Common-Data) 
 * Set up and compile extension modules for propagation models by following the instructions at [https://github.com/Wireless-Innovation-Forum/Spectrum-Access-System/tree/master/src/harness/reference_models/propagation](https://github.com/Wireless-Innovation-Forum/Spectrum-Access-System/tree/master/src/harness/reference_models/propagation)
-* Download *e-dpas.kml* and *gb-dpas.kml* file from ([https://www.ntia.gov/spectrum-frequency-bands/3550-3650-mhz](https://www.ntia.gov/spectrum-frequency-bands/3550-3650-mhz)) and save them under `../Spectrum-Access-System/data/ntia/` folder
+* Download *e-dpas.kml* and *gb-dpas.kml* file from ([https://www.ntia.gov/spectrum-frequency-bands/3550-3650-mhz](https://www.ntia.gov/spectrum-frequency-bands/3550-3650-mhz)) and save as *e-dpas.kml* and *gb-dpas.kml* under `../Spectrum-Access-System/data/ntia/` folder
 * Install *xarray* package and its dependencies ([https://docs.xarray.dev/en/stable/getting-started-guide/installing.html](https://docs.xarray.dev/en/stable/getting-started-guide/installing.html))
 * Install *scipy* package ([https://scipy.org/install/](https://scipy.org/install/))
 
@@ -28,31 +28,23 @@ The code in this repository depend on the WInnForum's SAS test harness code and 
    git clone https://github.com/usnistgov/nasctn-sea-modeling
    ```
 
-2. Update the `../Spectrum-Access-System/src/harness` folder with local directory in the following scripts:
-
- ```bash
-   src/mainscript_E_DPAs.py
-   src/mainscript_GB_DPAs.py
-   visualization/cbsd_grant_list_analysis_E_DPAs.ipynb
-   visualization/cbsd_grant_list_analysis_GB_DPAs.ipynb
-   visualization/aggregate_emission_analysis_E_DPAs.ipynb
-   visualization/aggregate_emission_analysis_GB_DPAs.ipynb
-   ```
-
-   Note that `visualization/*.ipynb` scripts are optional, which can used for plotting the results for a specific DPA.
+2. Update the `../Spectrum-Access-System/src/harness` folder with local directory in the following scripts `src/mainscript_E_DPAs.py`, and `src/mainscript_GB_DPAs.py`.
 
 3. Configure the number of parallel processes, i.e., `num_processes` parameter, in the following scripts `src/mainscript_E_DPAs.py` and `src/mainscript_GB_DPAs.py`.
 
-4. Navigate to the `src/` folder and type the following commands to run move list algorithm and compute aggregate emission at protection points and SEA sensor locations:
+4. Navigate to the `src/` folder and type the following commands to run the mainscripts:
 
    ```python
    ########## For E-DPAs (e.g., East1) ##########
+   # run move list algorithm and compute aggregate emission at protection points and SEA sensor locations
    python mainscript_E_DPAs.py --dpa_name="East1"
 
    ########## For GB-DPAs (always-on DPA Camp Pendleton) ##########
+   # run move list algorithm and compute aggregate emission at protection points and SEA sensor locations
    python mainscript_GB_DPAs.py --dpa_name="MCBPendleton"
 
    ########## For multiple DPAs: edit and run Bash scripts ##########
+   # run move list algorithm and compute aggregate emission at protection points and SEA sensor locations
    bash mainscript_bash.sh 
    ```
 
@@ -73,6 +65,8 @@ The code in this repository depend on the WInnForum's SAS test harness code and 
    # plot aggregate emissions at protection points and sensor locations
    aggregate_emission_analysis_GB_DPAs.ipynb
    ```
+
+Note: See the `examples/` folder for examples of data, results, and plots for E-DPA East1. Note that the FAD data in the `examples/data/fad/` folder is fake and not related to the real FAD data.
 
 ## NIST Software Licensing Statement
 
