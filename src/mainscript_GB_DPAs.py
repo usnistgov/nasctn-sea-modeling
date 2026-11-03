@@ -38,7 +38,7 @@ from pathlib import Path
 import argparse
 
 import sys
-sys.path.append(r"E:\Spectrum-Access-System\src\harness") # NOTE: Use your local directory
+sys.path.append(r"../Spectrum-Access-System/src/harness") # NOTE: Use your local directory
 from reference_models.common import mpool
 import data_SEA as data
 import dpa_mgr_SEA as dpa_mgr

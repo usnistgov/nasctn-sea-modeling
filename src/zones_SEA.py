@@ -99,9 +99,9 @@ from reference_models.geo import CONFIG
 # The reference files.
 PROTECTION_ZONE_FILE = 'protection_zones.kml'
 EXCLUSION_ZONE_FILE = 'GB_Part90_EZ.kml'
-COASTAL_DPA_ZONE_FILE = 'E-DPAs.kml'
-PORTAL_DPA_ZONE_FILE = 'P-DPAs.kml'
-GB_DPA_ZONE_FILE = 'GB-DPAs.kml'
+COASTAL_DPA_ZONE_FILE = 'e-dpas.kml' # 'E-DPAs.kml'
+PORTAL_DPA_ZONE_FILE = 'p-dpas.kml' # 'P-DPAs.kml'
+GB_DPA_ZONE_FILE = 'gb-dpas.kml' # 'GB-DPAs.kml'
 FCC_FIELD_OFFICES_FILE = 'fcc_field_office_locations.csv'
 
 # The reference files for extra zones.
