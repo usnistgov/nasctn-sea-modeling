@@ -27,8 +27,17 @@ The code in this repository depend on the WInnForum's SAS test harness code and 
    ```bash
    git clone https://github.com/usnistgov/nasctn-sea-modeling
    ```
+   
+2. Update the `../Spectrum-Access-System/src/harness` folder with local directory in the following scripts:
 
-2. Update the `../Spectrum-Access-System/src/harness` folder with local directory in the following scripts `src/mainscript_E_DPAs.py`, `src/mainscript_GB_DPAs.py`, `visualization/cbsd_grant_list_analysis_E_DPAs.ipynb`, `visualization/cbsd_grant_list_analysis_GB_DPAs.ipynb`, `visualization/aggregate_emission_analysis_E_DPAs.ipynb` , and `visualization/aggregate_emission_analysis_GB_DPAs.ipynb`.
+ ```bash
+   `src/mainscript_E_DPAs.py`
+   `src/mainscript_GB_DPAs.py`
+   `visualization/cbsd_grant_list_analysis_E_DPAs.ipynb`
+   `visualization/cbsd_grant_list_analysis_GB_DPAs.ipynb`
+   `visualization/aggregate_emission_analysis_E_DPAs.ipynb`
+   `visualization/aggregate_emission_analysis_GB_DPAs.ipynb`
+   ```
 
    Note that `visualization/*.ipynb` scripts are optional, which can used for plotting the results for a specific DPA.
 
