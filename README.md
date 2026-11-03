@@ -14,7 +14,7 @@ The code in this repository depend on the WInnForum's SAS test harness code and 
 * Install all the packages and software listed at [https://github.com/Wireless-Innovation-Forum/Spectrum-Access-System](https://github.com/Wireless-Innovation-Forum/Spectrum-Access-System)
 * Download the geo data (e.g., USGS NED Terrain and NLCD Land cover data, etc. ) by following the instructions at [https://github.com/Wireless-Innovation-Forum/Common-Data](https://github.com/Wireless-Innovation-Forum/Common-Data) 
 * Set up and compile extension modules for propagation models by following the instructions at [https://github.com/Wireless-Innovation-Forum/Spectrum-Access-System/tree/master/src/harness/reference_models/propagation](https://github.com/Wireless-Innovation-Forum/Spectrum-Access-System/tree/master/src/harness/reference_models/propagation)
-* Download *e-dpas.kml* and *gb-dpas.kml* file from ([https://www.ntia.gov/spectrum-frequency-bands/3550-3650-mhz](https://www.ntia.gov/spectrum-frequency-bands/3550-3650-mhz)) and save as *e-dpas.kml* and *gb-dpas.kml* under `../Spectrum-Access-System/data/ntia/` folder
+* Download *e-dpas.kml* and *gb-dpas.kml* file from ([https://www.ntia.gov/spectrum-frequency-bands/3550-3650-mhz](https://www.ntia.gov/spectrum-frequency-bands/3550-3650-mhz)) and save them under `../Spectrum-Access-System/data/ntia/` folder
 * Install *xarray* package and its dependencies ([https://docs.xarray.dev/en/stable/getting-started-guide/installing.html](https://docs.xarray.dev/en/stable/getting-started-guide/installing.html))
 * Install *scipy* package ([https://scipy.org/install/](https://scipy.org/install/))
 
