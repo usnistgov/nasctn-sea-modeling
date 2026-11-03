@@ -1,0 +1,2 @@
+Index,Sensor Short Name,Sensor Long Name,Location,Latitude,Longitude,Height (m),Height Type,Antenna Filename,Antenna Azimuth,Antenna Downtilt,Noise Floor (dBm/MHz)
+1,Pendleton,USMC Camp Pendleton,"USMC Camp Pendleton, CA",33.28231,-117.38838,6.4,AGL,omnivert.nc,0,0,-108

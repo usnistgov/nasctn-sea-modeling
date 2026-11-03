@@ -1,0 +1,7 @@
+Index,Sensor Short Name,Sensor Long Name,Location,Latitude,Longitude,Height (m),Height Type,Antenna Filename,Antenna Azimuth,Antenna Downtilt,Noise Floor (dBm/MHz)
+1,Catalina-Omni,US Coast Guard Tower Site (Mt Orizaba),"Catalina, CA",33.3795615,-118.4164147,4.72,AGL,omnivert.nc,0,0,-108
+2,Catalina-Directional,US Coast Guard Tower Site (Mt Orizaba),"Catalina, CA",33.3795615,-118.4164147,4.37,AGL,KPP-Panel.nc,33.5,0,-108
+3,Pendleton,USMC Camp Pendleton,"USMC Camp Pendleton, CA",33.28231,-117.38838,6.4,AGL,omnivert.nc,0,0,-108
+4,Midway,USS Midway Museum,"San Diego, CA",32.7139892,-117.175255,50,AGL,omnivert.nc,0,0,-108
+5,PtLoma-Omni,Point Loma,"San Diego, CA",32.6702556,-117.2404694,3,AGL ,omnivert.nc,0,0,-108
+6,PtLoma-Directional,Point Loma,"San Diego, CA",32.6702556,-117.2404694,3,AGL ,HG-Panel.nc,33,0,-108
