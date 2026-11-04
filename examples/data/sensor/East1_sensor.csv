@@ -1,0 +1,6 @@
+Index,Sensor Short Name,Sensor Long Name,Location,Latitude,Longitude,Height (m),Height Type,Antenna Filename,Antenna Azimuth,Antenna Downtilt,Noise Floor (dBm/MHz)
+1,NIT,Norfolk International Terminal,"Norfolk, VA",36.91552,-76.32245,48.5,AMSL,omnivert.nc,0,0,-108
+2,HU,Hampton University Tower,"Hampton, VA",37.02578,-76.3412,70.4,AMSL,omnivert.nc,0,0,-108
+3,Oceana,Naval Air Station Oceana,"Virginia Beach, VA",36.825115,-76.029533,8.5,AGL,omnivert.nc,0,0,-108
+4,CBBT-Omni,"Island 4, Chesapeake Bay Bridge Tunnel","Chesapeake Bay, VA",37.046078,-76.063003,40.4,AMSL,omnivert.nc,0,0,-108
+5,CBBT-Directional,"Island 4, Chesapeake Bay Bridge Tunnel","Chesapeake Bay, VA",37.046078,-76.063003,39.5,AMSL,KPP-Panel.nc,205,0,-108
