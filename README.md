@@ -66,7 +66,7 @@ The code in this repository depend on the WInnForum's SAS test harness code and 
    aggregate_emission_analysis_GB_DPAs.ipynb
    ```
 
-Note: See the `examples/` folder for examples of data, results, and plots for E-DPA East1. Note that the FAD data in the `examples/data/fad/` folder is fake and not related to the real FAD data.
+Note: See the `examples/` folder for examples of data, results, and plots for E-DPAs East-1, West-13, West-14 and GB-DPA MCBPendleton. Note that the FAD data in the `examples/data/fad/` folder is fake and not related to the real FAD data.
 
 ## NIST Software Licensing Statement
 
